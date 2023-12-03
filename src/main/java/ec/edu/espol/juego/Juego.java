@@ -45,6 +45,8 @@ public class Juego {
         System.out.println();
     }
 
+    //------------------------------------------------------------------------
+    
     public boolean agregarFichaLinea(Ficha ficha, Jugador jugador) {
     if (!(ficha instanceof FichaComodin)) {
         if (lineaJuego.isEmpty()) {
@@ -104,6 +106,8 @@ public class Juego {
     }
     }   
 
+    //------------------------------------------------------------------------
+    
     public boolean JuegoMaquina(){
         Random random = new Random();
         Jugador maquina = jugadores.get(1);
@@ -148,6 +152,80 @@ public class Juego {
     // Si llega aquí, la máquina no pudo jugar
         return false;
     }
+    
+    //------------------------------------------------------------------------
+    
+    public void jugar() {
+        while (true){
+            for (Jugador jugador : jugadores){
+                System.out.println("-------------------------------------");
+                System.out.println("\nTurno de " + jugador.getNombre());
+                System.out.println("Su mano es:");
+                jugador.imprimirMano();
+                System.out.println("\n");
+                System.out.println("La linea de juego es:");
+                mostrarLinea();
 
-  
+                if (jugador == jugadores.get(0)) {
+                    // Turno del jugador 
+                    System.out.println("Índice de ficha para jugar (0 es el primero): ");
+                    int indexFicha = sc.nextInt();
+                    Ficha fichaAJugar = jugador.getMano(indexFicha);
+                    if (agregarFichaLinea(fichaAJugar, jugador)){
+                        System.out.println("Movimiento Válido.");
+                        jugador.removerFicha(fichaAJugar);
+                        System.out.println("Nueva Linea Juego");
+                        //System.out.println("\n");
+                        mostrarLinea();
+                    }else{
+                        System.out.println("Movimiento Inválido. Inténtalo de nuevo.");
+                        System.out.println("\nSi usted cree que se equivoco "
+                                + " presione cualquier letra pero queda penalizado - La Maquina sigue su turno. "
+                                + "Si usted cree que no puede"
+                                + " continuar presione SALIR");
+                        String r=sc.next();
+                        if (r.equals("SALIR")){
+                            return;
+                        } 
+                    }
+                }else{
+                     // Turno de la máquina
+                    boolean jugadaRealizada = JuegoMaquina();
+                    if (!jugadaRealizada){
+                        System.out.println("\nLa Máquina no puede jugar. Fin del juego. GANASTE!!");
+                        return;
+                    }
+                  }
+
+                if (jugador.getMano().isEmpty()){
+                    System.out.println(jugador.getNombre() + " se quedó sin fichas. ¡Ganó!");
+                    return;
+                }
+            }
+
+            // Verificar si ambos jugadores no pueden jugar
+            if (jugadores.get(0).getMano().isEmpty() && jugadores.get(1).getMano().isEmpty()) {
+                System.out.println("Ambos jugadores no pueden jugar. Fin del juego.");
+                return;
+            }
+        }
+    }
+
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("    BIENVENIDO AL JUEGO DOMINO"
+                + "\n--------------------------------------");
+        System.out.print("\nIngrese el nombre del jugador: ");
+        
+        String nombreJugador = sc.nextLine();
+        String nombreMaquina="Maquina";
+        
+        Juego juego = new Juego();
+        
+        juego.agregarJugador(nombreJugador);
+        juego.agregarJugador(nombreMaquina);
+        
+        juego.jugar();
+    }
 }
