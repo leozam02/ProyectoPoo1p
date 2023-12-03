@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ec.edu.espol.proyecto1pmio;
+package ec.edu.espol.juego;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -104,7 +104,50 @@ public class Juego {
     }
     }   
 
-    // Colocar Juego Maquina, jugar y main
+    public boolean JuegoMaquina(){
+        Random random = new Random();
+        Jugador maquina = jugadores.get(1);
+
+        // Crear una copia de la lista de fichas de la máquina
+        ArrayList<Ficha> copiaManoMaquina = new ArrayList<>(maquina.getMano());
+
+        for (Ficha ficha : copiaManoMaquina) {
+        
+        
+            if (!(ficha instanceof FichaComodin)) {
+                if (agregarFichaLinea(ficha, maquina)) {
+                maquina.removerFicha(ficha);
+                System.out.println("La maquina jugó");
+                return true;  // Jugada realizada
+                }
+            } else {
+                int ladorandom=random.nextInt(1)+1;
+                if(ladorandom==1){
+                    FichaComodin f = (FichaComodin) ficha;
+                    // Modifica los lados con valores aleatorios
+                    int lado1 = random.nextInt(6) + 1;      
+                    f.setLado1(lado1);
+                    lineaJuego.add(0, f);
+                    maquina.removerFicha(ficha);
+                    System.out.println("La maquina jugó");// Modifica la lista original
+                    return true;
+                }  // Jugada realizada
+                else{
+                    FichaComodin f = (FichaComodin) ficha;
+                    // Modifica los lados con valores aleatorios
+                    int lado2 = random.nextInt(6) + 1;      
+                    f.setLado2(lado2);
+                    lineaJuego.add( f);
+                    maquina.removerFicha(ficha);  // Modifica la lista original
+                    System.out.println("La maquina jugó");
+                    return true;
+                }
+              }
+        }
+
+    // Si llega aquí, la máquina no pudo jugar
+        return false;
+    }
 
   
 }

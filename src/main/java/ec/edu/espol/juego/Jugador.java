@@ -31,6 +31,10 @@ public class Jugador {
     }
     
     
+    public ArrayList<Ficha> getMano() {
+        return mano;
+    }
+    
     public void imprimirMano() {
         for (int i = 0; i < mano.size(); i++) {
             System.out.print(mano.get(i));
@@ -42,6 +46,7 @@ public class Jugador {
         mano.remove(ficha);
     }
 
+    @Override
     public String toString(){
         return nombre;
     }
