@@ -6,7 +6,7 @@ package ec.edu.espol.juego;
 
 /**
  *
- * @author leoza
+ * @author Bruno
  */
 public class Ficha {
     protected int lado1;
@@ -30,5 +30,4 @@ public class Ficha {
     public String toString(){
         return lado1+":"+lado2;
     }
- 
 }
