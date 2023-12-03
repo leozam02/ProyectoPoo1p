@@ -2,17 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ec.edu.espol.juego;
-
+package ec.edu.espol.proyecto1pmio;
 import java.util.ArrayList;
 import java.util.Random;
-
 /**
  *
  * @author leoza
  */
 public class Utilitaria {
-        public static ArrayList<Ficha> crearManoJugador() {
+     public static ArrayList<Ficha> crearManoJugador() {
         ArrayList<Ficha> mano = new ArrayList<>();
         Random random = new Random();
 
